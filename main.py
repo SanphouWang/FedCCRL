@@ -61,10 +61,6 @@ algo2argparser = {
 def get_output_dir(args):
     if algo in ["FedAvg", "GA", "FedADG"]:
         return begin_time
-    elif algo == "FedMSFA":
-        output_dir = f"eta_{args.eta}_delta_{args.delta}"
-    elif algo == "FedMS":
-        output_dir = f"eta_{args.eta}"
     elif algo == "CCST":
         output_dir = f"k_{args.k}_upload_ratio_{args.upload_ratio}"
     elif algo == "FedSR":
@@ -73,15 +69,16 @@ def get_output_dir(args):
         output_dir = f"gamma_{args.gamma}_ema_{args.ema}"
     elif algo == "FedProx":
         output_dir = f"mu_{args.mu}"
+    elif algo == "FedCCRL":
+        return begin_time
+
     output_dir = output_dir + "_" + begin_time
     return output_dir
 
 
 def get_main_argparser():
     parser = ArgumentParser(description="Main arguments.")
-    parser.add_argument(
-        "-a", "--algo", type=str, default="FedMS", choices=list(algo2server.keys())
-    )
+    parser.add_argument("-a", "--algo", type=str, default="FedMS", choices=list(algo2server.keys()))
     parser.add_argument(
         "-d",
         "--dataset",
@@ -167,9 +164,7 @@ if __name__ == "__main__":
         except Exception as e:
             pool.terminate()
             pool.join()
-            raise RuntimeError(
-                "An error occurred in one of the worker processes."
-            ) from e
+            raise RuntimeError("An error occurred in one of the worker processes.") from e
     else:
         for domain in domains:
             process(domain)

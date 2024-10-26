@@ -20,9 +20,7 @@ def get_fedccrl_argparser():
     parser = get_fedavg_argparser()
     parser.add_argument("--epsilon", type=float, default=1e-6)
     parser.add_argument("--r", type=float, default=0.1, help="upload ratio")
-    parser.add_argument(
-        "--p", type=float, default=1, help="probability to process MixStyle"
-    )
+    parser.add_argument("--p", type=float, default=1, help="probability to process MixStyle")
     parser.add_argument(
         "--lambda1",
         type=float,
@@ -41,16 +39,14 @@ def get_fedccrl_argparser():
 
 
 class FedCCRLServer(FedAvgServer):
-    def __init__(self, algo="FedMS", args: Namespace = None):
+    def __init__(self, algo="FedCCRL", args: Namespace = None):
         if args is None:
             args = get_fedccrl_argparser().parse_args()
         super().__init__(algo, args)
 
     def initialize_clients(self):
         self.client_list = [
-            FedCCRLClient(
-                self.args, FLDataset(self.args, client_id), client_id, self.logger
-            )
+            FedCCRLClient(self.args, FLDataset(self.args, client_id), client_id, self.logger)
             for client_id in range(self.num_client)
         ]
 
@@ -79,9 +75,7 @@ class FedCCRLServer(FedAvgServer):
             # generate style pool
             statistic_pool = self.generate_statistic_pool()
             for client_id in range(self.num_client):
-                self.client_list[client_id].download_statistic_pool(
-                    deepcopy(statistic_pool)
-                )
+                self.client_list[client_id].download_statistic_pool(deepcopy(statistic_pool))
                 self.client_list[client_id].train()
 
             aggregated_weights = self.aggregate_model()
@@ -112,9 +106,7 @@ class FedCCRLServer(FedAvgServer):
     ):
         statistic_pool = self.generate_statistic_pool()
         for client_id in range(self.num_client):
-            self.client_list[client_id].download_statistic_pool(
-                deepcopy(statistic_pool)
-            )
+            self.client_list[client_id].download_statistic_pool(deepcopy(statistic_pool))
         path2save = os.path.join(PROJECT_DIR, "image", "augmentation", local_time())
         if not os.path.exists(path2save):
             os.makedirs(path2save)

@@ -1,6 +1,6 @@
 # FedCCRL: Federated Domain Generalization with Cross-Client Representation Learning
 # Dataset Preparation
-download dataset and put them at data/[dataset]. The structure should be data/[dataset_name]/raw/label/image.
+download dataset and put them at data/[dataset]. The structure should be data/[dataset_name]/raw/domain_name/label/image.
 # How to Run
 You can run main.py directly with 
 ~~~

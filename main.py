@@ -38,8 +38,6 @@ algo2server = {
     "GA": GAServer,
     "FedIIR": FedIIRServer,
     "FedADG": FedADGServer,
-    "FedMS": FedMSServer,
-    "FedMSFA": FedMSFAServer,
     "CCST": CCSTServer,
     "FedCCRL": FedCCRLServer,
 }
@@ -50,8 +48,6 @@ algo2argparser = {
     "GA": get_GA_argparser(),
     "FedIIR": get_fediir_argparser(),
     "FedADG": get_fedadg_argparser(),
-    "FedMS": get_fedms_argparser(),
-    "FedMSFA": get_fedmsfa_argparser(),
     "CCST": get_ccst_argparser(),
     "FedCCRL": get_fedccrl_argparser(),
 }
